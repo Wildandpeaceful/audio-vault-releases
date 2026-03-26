@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Audio Vault — Local Audio Library for Music Producers</title>
+  <meta name="description" content="Audio Vault is a fast, local file manager built for music producers. Organize, analyze, and manage your beats library privately on your own computer. No cloud, no subscriptions." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* CSS Design Token System matching Audio Vault */
+    :root {
+      /* Palette */
+      --bg-base: #121216;
+      --bg-surface: #1E1E24;
+      --bg-surface-hover: #26262D;
+      --bg-surface-active: #2D2D35;
+      --accent: #8B5CF6;
+      --accent-hover: #9F75FF;
+      --accent-glow: rgba(139, 92, 246, 0.4);
+      --border-default: rgba(255, 255, 255, 0.08);
+      --border-light: rgba(255, 255, 255, 0.15);
+      
+      /* Text */
+      --text-primary: #FAFAFA;
+      --text-secondary: #A1A1AA;
+      --text-tertiary: #71717A;
+      --text-on-accent: #FFFFFF;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient background glow */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -20vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 80vh;
+      background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.15) 0%, transparent 60%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Glassmorphism setup */
+    .glass-panel {
+      background: rgba(30, 30, 36, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-default);
+    }
+
+    /* ── Header / Nav ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 48px;
+      border-bottom: 1px solid var(--border-default);
+      background: rgba(18, 18, 22, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-container img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .beta-badge {
+      background: rgba(139, 92, 246, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Hero Section ── */
+    .hero {
+      padding: 180px 24px 100px;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid var(--border-light);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: 0.02em;
+    }
+
+    .hero h1 {
+      font-size: 64px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+
+    .hero-highlight {
+      background: linear-gradient(135deg, var(--accent), #C4B5FD);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      max-width: 600px;
+      margin-inline: auto;
+      font-weight: 400;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--text-on-accent);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border-default);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-surface-hover);
+      border-color: var(--border-light);
+    }
+
+    .system-reqs {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+
+    /* ── Features Grid ── */
+    .features {
+      max-width: 1100px;
+      margin: 0 auto 120px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      border-radius: 20px;
+      padding: 32px;
+      text-align: left;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(139, 92, 246, 0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 20px;
+      background: rgba(139, 92, 246, 0.15);
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .feature-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .feature-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Installation Instructions ── */
+    .install {
+      max-width: 800px;
+      margin: 0 auto 120px;
+      padding: 0 24px;
+    }
+
+    .install-box {
+      border-radius: 24px;
+      padding: 48px;
+    }
+
+    .install h2 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--bg-base);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border-default);
+    }
+
+    .step-number {
+      background: var(--accent);
+      color: var(--text-on-accent);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .step-content strong {
+      display: block;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      font-size: 16px;
+    }
+    
+    .step-content p {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .mac-warning {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border-default);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-surface);
+    }
+
+    .footer-text {
+      color: var(--text-tertiary);
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 48px; }
+      header { padding: 16px 24px; }
+      footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
+      .install-box { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <img src="logo.jpg" alt="Audio Vault Logo" />
+      <span class="logo-text">Audio Vault</span>
+      <span class="beta-badge">BETA</span>
+    </div>
+    <a href="https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.0/Audio%20Vault-1.0.0-universal.dmg" class="btn btn-primary" style="padding: 10px 20px; font-size: 14px; box-shadow: none;">Download DMG</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-badge">Designed for Music Producers</div>
+    <h1>Your beats. <span class="hero-highlight">Organized.</span> Locally.</h1>
+    <p>A private, lighting-fast desktop application to organize, analyze, and manage your local audio library. No cloud required.</p>
+    
+    <div class="cta-group">
+      <a href="https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.0/Audio%20Vault-1.0.0-universal.dmg" class="btn btn-primary">
+        ↓ Download for macOS
+      </a>
+      <a href="#installation" class="btn btn-secondary">
+        Install Guide
+      </a>
+    </div>
+    <div class="system-reqs">Version 1.0.0 Beta • Intel & Apple Silicon supported</div>
+  </section>
+
+  <section class="features">
+    <div class="feature-card glass-panel">
+      <div class="feature-icon">✨</div>
+      <h3 class="feature-title">Auto-Analysis</h3>
+      <p class="feature-desc">Analyzes every track locally to extract BPM, Camelot Key, energy levels, and mood tags automatically as you import.</p>
+    </div>
+    <div class="feature-card glass-panel">
+      <div class="feature-icon">🔍</div>
+      <h3 class="feature-title">Smart Filtering</h3>
+      <p class="feature-desc">Instantly search thousands of beats. Filter by BPM ranges, specific musical keys, moods, or custom tags.</p>
+    </div>
+    <div class="feature-card glass-panel">
+      <div class="feature-icon">📦</div>
+      <h3 class="feature-title">Pack Creation</h3>
+      <p class="feature-desc">Select multiple variations of a beat, click export, and generate a perfectly organized ZIP pack ready to send to clients.</p>
+    </div>
+    <div class="feature-card glass-panel">
+      <div class="feature-icon">🎧</div>
+      <h3 class="feature-title">Track Inspector</h3>
+      <p class="feature-desc">A beautiful inspector panel lets you preview audio, edit metadata, add ISRC codes, and tweak genres seamlessly.</p>
+    </div>
+    <div class="feature-card glass-panel">
+      <div class="feature-icon">🔄</div>
+      <h3 class="feature-title">Format Conversion</h3>
+      <p class="feature-desc">Easily convert local tracks between WAV, AIFF, FLAC, and MP3 without needing third-party tools.</p>
+    </div>
+    <div class="feature-card glass-panel">
+      <div class="feature-icon">🔒</div>
+      <h3 class="feature-title">100% Private</h3>
+      <p class="feature-desc">Your beats never leave your hard drive. Audio Vault points directly to your Finder folders and works completely offline.</p>
+    </div>
+  </section>
+
+  <section id="installation" class="install">
+    <div class="install-box glass-panel">
+      <h2>Installation Guide</h2>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <strong>Download the DMG</strong>
+            <p>Click the download button above to grab the latest universal build.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <strong>Install the Application</strong>
+            <p>Double-click the DMG file and drag Audio Vault into your Applications folder.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <strong>Bypass Gatekeeper (First Launch)</strong>
+            <p>Since this is a beta release, macOS will prevent you from opening it normally. You must <strong>Right-Click → Open</strong> the app from Finder, then click "Open" on the warning dialog.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mac-warning">
+        <div>⚠️</div>
+        <div>
+          <strong>Important Note:</strong> The "Developer cannot be verified" warning is standard for apps that aren't distributed through the Mac App Store yet. You only need to do the Right-Click bypass once.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo-container">
+      <img src="logo.jpg" alt="Audio Vault" style="width: 24px; height: 24px;" />
+      <span class="logo-text" style="font-size: 14px;">Audio Vault</span>
+    </div>
+    <div class="footer-text">
+      © 2026 Wildandpeaceful. Your beats stay exactly where they belong — with you.
+    </div>
+  </footer>
+
+</body>
+</html>
