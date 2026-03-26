@@ -81,35 +81,40 @@
     }
     .nav-dl:hover { background: #7c3aed; transform: translateY(-1px); box-shadow: 0 6px 24px var(--accent-glow); }
 
-    /* ── Hero ── */
-    .hero {
+    /* ── Split Hero ── */
+    .hero-split {
       position: relative; z-index: 1;
       min-height: 100svh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 100px 24px 60px;
-      text-align: center;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 48px;
+      align-items: center;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 90px 48px 60px;
     }
+
+    .hero-text { display: flex; flex-direction: column; align-items: flex-start; }
 
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 28px;
-      padding: 6px 16px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 24px;
+      padding: 5px 14px; border-radius: 20px;
       border: 1px solid rgba(139,92,246,0.25);
       background: rgba(139,92,246,0.08);
     }
 
-    .hero h1 {
-      font-size: clamp(36px, 8vw, 80px);
+    .hero-text h1 {
+      font-size: clamp(38px, 4.5vw, 64px);
       font-weight: 900;
-      line-height: 1.05;
+      line-height: 1.06;
       letter-spacing: -0.04em;
-      max-width: 900px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
+      text-align: left;
     }
 
-    .hero h1 em {
+    .hero-text h1 em {
       font-style: normal;
       background: linear-gradient(125deg, var(--accent) 0%, var(--accent-2) 100%);
       -webkit-background-clip: text;
@@ -118,12 +123,13 @@
     }
 
     .hero-sub {
-      font-size: clamp(15px, 2.5vw, 19px);
+      font-size: 17px;
       color: var(--text-2); line-height: 1.65;
-      max-width: 560px; margin-bottom: 44px;
+      margin-bottom: 36px;
+      text-align: left;
     }
 
-    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
     .btn-hero-primary {
       font-size: 15px; font-weight: 700;
@@ -143,31 +149,29 @@
     }
     .btn-hero-secondary:hover { background: var(--surface-2); color: var(--text); border-color: rgba(255,255,255,0.2); }
 
-    .hero-note { margin-top: 18px; font-size: 12px; color: var(--text-3); }
+    .hero-note { margin-top: 16px; font-size: 12px; color: var(--text-3); }
 
-    /* ── App Showcase — SCENE PLAYER ── */
+    /* ── App Showcase right side ── */
     .showcase {
       position: relative; z-index: 1;
-      max-width: 1100px; margin: 0 auto 100px;
-      padding: 0 24px;
     }
     .showcase-label {
-      text-align: center; font-size: 12px; font-weight: 700;
+      text-align: center; font-size: 11px; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-3); margin-bottom: 40px;
+      color: var(--text-3); margin-bottom: 12px;
     }
 
     /* Scene dot indicators */
     .scene-dots {
-      display: flex; justify-content: center; gap: 8px; margin-bottom: 24px;
+      display: flex; justify-content: center; gap: 8px; margin-bottom: 14px;
     }
     .scene-dot {
-      width: 28px; height: 4px; border-radius: 2px;
+      width: 24px; height: 3px; border-radius: 2px;
       background: var(--surface-3);
       cursor: pointer; transition: background 0.3s, width 0.3s;
     }
     .scene-dot.active {
-      background: var(--accent); width: 44px;
+      background: var(--accent); width: 36px;
     }
 
     /* The fake app frame */
@@ -176,9 +180,9 @@
       aspect-ratio: 16 / 9;
       background: var(--surface);
       border: 1px solid var(--border-2);
-      border-radius: 16px;
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05) inset;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05) inset;
       position: relative;
     }
 
@@ -215,12 +219,12 @@
     }
     .mock-folder {
       display: flex; align-items: center; gap: 6px;
-      font-size: 11px; padding: 7px 8px; border-radius: 6px;
+      font-size: 12px; padding: 8px 9px; border-radius: 6px;
       color: var(--text-2); font-weight: 500;
       transition: all 0.3s; cursor: default; white-space: nowrap; overflow: hidden;
     }
     .mock-folder.selected { background: rgba(139,92,246,0.2); color: var(--accent); }
-    .mock-folder-icon { font-size: 13px; flex-shrink: 0; }
+    .mock-folder-icon { font-size: 14px; flex-shrink: 0; }
 
     /* Main area */
     .mock-main {
@@ -234,16 +238,14 @@
       display: flex; align-items: center; gap: 8px;
     }
     .mock-search {
-      flex: 1; height: 32px; border-radius: 7px;
+      flex: 1; height: 34px; border-radius: 7px;
       background: rgba(0,0,0,0.4); border: 1px solid var(--border);
       display: flex; align-items: center; padding: 0 12px; gap: 6px;
     }
-    .mock-search-icon { font-size: 12px; color: var(--text-3); }
-    .mock-search-text {
-      font-size: 11px; color: var(--text-2);
-    }
+    .mock-search-icon { font-size: 13px; color: var(--text-3); }
+    .mock-search-text { font-size: 12px; color: var(--text-2); }
     .mock-search-cursor {
-      width: 1px; height: 13px; background: var(--accent);
+      width: 1px; height: 14px; background: var(--accent);
       animation: blink 1s infinite;
     }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -255,7 +257,7 @@
       border-bottom: 1px solid var(--border);
     }
     .filter-chip {
-      font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; padding: 5px 11px; border-radius: 20px;
       background: var(--surface-3); color: var(--text-2);
       border: 1px solid var(--border); transition: all 0.3s;
     }
@@ -265,11 +267,11 @@
     .mock-tracks {
       flex: 1; overflow: hidden;
       display: flex; flex-direction: column;
-      padding: 8px 10px; gap: 4px;
+      padding: 8px 10px; gap: 5px;
     }
     .mock-track {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 12px; border-radius: 8px;
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; border-radius: 9px;
       background: var(--surface-2);
       border: 1px solid transparent;
       transition: all 0.3s;
@@ -277,16 +279,16 @@
     .mock-track:hover { background: var(--surface-3); }
     .mock-track.playing { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.3); }
     .track-thumb {
-      width: 32px; height: 32px; border-radius: 6px;
+      width: 36px; height: 36px; border-radius: 7px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px; flex-shrink: 0;
+      font-size: 16px; flex-shrink: 0;
     }
     .track-meta { flex: 1; overflow: hidden; }
-    .track-name { font-size: 11px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .track-sub { font-size: 10px; color: var(--text-3); margin-top: 2px; }
-    .track-chips { display: flex; gap: 4px; flex-shrink: 0;}
+    .track-name { font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .track-sub { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+    .track-chips { display: flex; gap: 5px; flex-shrink: 0; }
     .tchip {
-      font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 4px;
+      font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 5px;
       background: var(--surface-3); color: var(--text-2);
     }
     .tchip.main { background: rgba(139,92,246,0.2); color: var(--accent); }
@@ -333,20 +335,20 @@
     }
 
     .insp-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
-    .insp-title { font-size: 12px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .insp-sub { font-size: 10px; color: var(--text-3); }
+    .insp-title { font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .insp-sub { font-size: 11px; color: var(--text-3); }
 
-    .insp-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .insp-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
     .insp-stat {
       background: var(--surface-2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 10px;
+      border-radius: 9px; padding: 11px;
     }
-    .stat-l { font-size: 9px; color: var(--text-3); font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
-    .stat-v { font-size: 13px; font-weight: 700; color: var(--text); }
+    .stat-l { font-size: 10px; color: var(--text-3); font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
+    .stat-v { font-size: 14px; font-weight: 700; color: var(--text); }
     .stat-v.hi { color: var(--accent); }
 
-    .insp-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-    .insp-tag { font-size: 10px; padding: 4px 9px; border-radius: 5px; font-weight: 600; }
+    .insp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .insp-tag { font-size: 11px; padding: 5px 10px; border-radius: 6px; font-weight: 600; }
     .insp-tag.mood { background: rgba(139,92,246,0.2); color: var(--accent); }
     .insp-tag.genre { background: rgba(16,185,129,0.15); color: var(--green); }
     .insp-tag.energy { background: rgba(245,158,11,0.15); color: var(--amber); }
@@ -373,9 +375,9 @@
     /* ── Scene label overlay ── */
     .scene-caption {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 14px;
       font-size: 13px; color: var(--text-2);
-      min-height: 20px;
+      min-height: 18px;
       transition: opacity 0.3s;
     }
     .scene-caption strong { color: var(--text); }
@@ -446,31 +448,35 @@
     footer span { font-size: 13px; color: var(--text-3); }
 
     /* ── Mobile ── */
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       nav { padding: 0 20px; }
-      .hero { padding: 80px 20px 40px; }
-      .features-grid { grid-template-columns: 1fr; }
-      .hero-eyebrow { display: none; }
-      .hero h1 { font-size: 38px; }
       footer { flex-direction: column; text-align: center; padding: 24px 20px; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
 
-      /* On mobile, hide the complex demo and show a static screenshot-style UI */
-      .showcase { padding: 0 16px; }
-      .app-frame { aspect-ratio: unset; height: 340px; }
-      .mock-sidebar { width: 35%; min-width: 90px; padding: 10px 8px; }
-      .mock-folder { font-size: 10px; padding: 6px; }
+      /* Stack hero vertically: text top, demo below */
+      .hero-split {
+        grid-template-columns: 1fr;
+        padding: 90px 20px 40px;
+        text-align: center;
+        gap: 32px;
+      }
+      .hero-text { align-items: center; }
+      .hero-text h1 { text-align: center; font-size: clamp(32px, 8vw, 52px); }
+      .hero-sub { text-align: center; }
+      .hero-btns { justify-content: center; }
+      .showcase { padding: 0; }
+      .app-frame { border-radius: 10px; }
       .mock-inspector { display: none; }
       .track-chips { display: none; }
-      .mock-topbar { padding: 8px; }
       #cursor { display: none; }
-      .mock-tracks { padding: 6px 6px; }
-      .mock-track { padding: 8px; }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 32px; }
-      .hero-btns .btn-hero-secondary { display: none; }
+      .hero-text h1 { font-size: 32px; }
+      .btn-hero-secondary { display: none; }
+      .mock-sidebar { width: 30%; min-width: 80px; }
+      .app-frame { aspect-ratio: unset; height: 260px; }
     }
   </style>
 </head>
@@ -488,32 +494,34 @@
   <a class="nav-dl" href="https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.0/Audio.Vault-1.0.0-universal.dmg">⬇ Download</a>
 </nav>
 
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-eyebrow">🎧 Built for Music Producers</div>
-  <h1>Your beats.<br/><em>Organized.</em> Locally.</h1>
-  <p class="hero-sub">A beautiful, private desktop app for managing your audio library. Analyze BPM, key, mood — instantly. No cloud. No subscriptions.</p>
-  <div class="hero-btns">
-    <a class="btn-hero-primary" href="https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.0/Audio.Vault-1.0.0-universal.dmg">
-      ⬇ Download for Mac
-    </a>
-    <a class="btn-hero-secondary" href="#install">
-      Install Guide ↓
-    </a>
-  </div>
-  <p class="hero-note">v1.0.0 Beta · macOS · Intel + Apple Silicon · Free</p>
-</section>
+<!-- Split Hero = Text LEFT + Demo RIGHT -->
+<div class="hero-split">
 
-<!-- Scene-based App Showcase -->
-<div class="showcase">
-  <p class="showcase-label">See it in action</p>
-  
-  <div class="scene-dots" id="sceneDots">
-    <div class="scene-dot active" onclick="goToScene(0)"></div>
-    <div class="scene-dot" onclick="goToScene(1)"></div>
-    <div class="scene-dot" onclick="goToScene(2)"></div>
-    <div class="scene-dot" onclick="goToScene(3)"></div>
+  <!-- Left: Text -->
+  <div class="hero-text">
+    <div class="hero-eyebrow">🎧 Built for Music Producers</div>
+    <h1>Your beats.<br/><em>Organized.</em> Locally.</h1>
+    <p class="hero-sub">A beautiful, private desktop app for managing your audio library. Auto-analyzes BPM, key and mood — instantly. No cloud. No subscriptions.</p>
+    <div class="hero-btns">
+      <a class="btn-hero-primary" href="https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.0/Audio.Vault-1.0.0-universal.dmg">
+        ⬇ Download for Mac
+      </a>
+      <a class="btn-hero-secondary" href="#install">
+        Install Guide ↓
+      </a>
+    </div>
+    <p class="hero-note">v1.0.0 Beta · macOS · Intel + Apple Silicon · Free</p>
   </div>
+
+  <!-- Right: Animated Demo -->
+  <div class="showcase">
+    <p class="showcase-label">See it in action</p>
+    <div class="scene-dots" id="sceneDots">
+      <div class="scene-dot active" onclick="goToScene(0)"></div>
+      <div class="scene-dot" onclick="goToScene(1)"></div>
+      <div class="scene-dot" onclick="goToScene(2)"></div>
+      <div class="scene-dot" onclick="goToScene(3)"></div>
+    </div>
 
   <div class="app-frame" id="appFrame">
     <!-- Title bar -->
@@ -633,10 +641,12 @@
     </div>
   </div>
 
-  <div class="scene-caption" id="sceneCaption">
-    <strong>Library View</strong> — All your folders connected, instantly browsable
-  </div>
-</div>
+    <div class="scene-caption" id="sceneCaption">
+      <strong>Library View</strong> — All your folders connected, instantly browsable
+    </div>
+  </div><!-- end showcase -->
+
+</div><!-- end hero-split -->
 
 <!-- Features -->
 <section class="features-grid">
