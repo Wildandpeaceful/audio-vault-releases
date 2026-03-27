@@ -605,13 +605,17 @@
   // Dynamic OS Detect & Swap Configuration Array
   document.addEventListener("DOMContentLoaded", () => {
     const isWindows = navigator.platform.toLowerCase().includes('win');
+    const isMac = navigator.platform.toLowerCase().includes('mac');
+    const headerBtn = document.getElementById("dl-header");
+    const heroBtn = document.getElementById("dl-hero");
+    const installSteps = document.querySelector('.step-list');
+    
+    // Beta 1.0.4 Target URLs
+    const winExeUrl = "https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.4-beta.1/Audio-Vault-Beta---v1.0.4-beta.1-for-Windows.exe";
+    const macArmUrl = "https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.4-beta.1/Audio-Vault-Beta---v1.0.4-beta.1-for-Mac-arm64.dmg";
+    const macX64Url = "https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.4-beta.1/Audio-Vault-Beta---v1.0.4-beta.1-for-Mac-x64.dmg";
+
     if (isWindows) {
-      const headerBtn = document.getElementById("dl-header");
-      const heroBtn = document.getElementById("dl-hero");
-      const installSteps = document.querySelector('.step-list');
-      const winExeUrl = "https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.3-beta.2/Audio-Vault-Beta---v1.0.3-beta.2-for-Windows.exe";
-      
-      // Inject Windows Native Payload Targets & Syntax Overrides
       if (headerBtn) {
         headerBtn.href = winExeUrl;
         headerBtn.textContent = "Download Windows Beta";
@@ -620,7 +624,7 @@
         heroBtn.href = winExeUrl;
         heroBtn.textContent = "⬇ Download Beta Windows App";
       }
-      // Re-Write Tutorial Block To Parse As NSIS Windows Installation Guide
+      // Windows UI Overrides
       if (installSteps) {
         installSteps.innerHTML = `
           <div class="step-item">
@@ -635,6 +639,19 @@
             <div class="step-number">3</div>
             <div class="step-content"><strong>Windows SmartScreen</strong><p>If you see a "Windows protected your PC" warning initially, simply click "More Info" and "Run Anyway".</p></div>
           </div>
+        `;
+      }
+    } else if (isMac) {
+      // Split DMG Targets for Apple Silicon vs Intel to Bypass Universal Binary Corruption
+      if (headerBtn) {
+        headerBtn.href = macArmUrl; // Default header to Silicon
+        headerBtn.textContent = "Download for Mac";
+      }
+      if (heroBtn && heroBtn.parentNode) {
+        heroBtn.parentNode.innerHTML = `
+          <a href="${macArmUrl}" class="btn btn-primary" style="font-size:14px; padding:12px 20px;">⬇ Apple Silicon (M1/M2/M3)</a>
+          <a href="${macX64Url}" class="btn btn-primary" style="font-size:14px; padding:12px 20px;">⬇ Intel Mac</a>
+          <a href="#installation" class="btn btn-secondary" style="font-size:14px; padding:12px 20px;">Install Guide</a>
         `;
       }
     }
