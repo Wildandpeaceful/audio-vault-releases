@@ -612,8 +612,7 @@
     
     // Beta 1.0.4 Target URLs
     const winExeUrl = "https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.4-beta.1/Audio-Vault-Beta---v1.0.4-beta.1-for-Windows.exe";
-    const macArmUrl = "https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.4-beta.1/Audio-Vault-Beta---v1.0.4-beta.1-for-Mac-arm64.dmg";
-    const macX64Url = "https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.4-beta.1/Audio-Vault-Beta---v1.0.4-beta.1-for-Mac-x64.dmg";
+    const macUniversalUrl = "https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.4-beta.1/Audio-Vault-Beta---v1.0.4-beta.1-for-Mac.dmg";
 
     if (isWindows) {
       if (headerBtn) {
@@ -642,15 +641,14 @@
         `;
       }
     } else if (isMac) {
-      // Split DMG Targets for Apple Silicon vs Intel
+      // Revert to Universal Mac Targets
       if (headerBtn) {
-        headerBtn.href = macArmUrl; 
+        headerBtn.href = macUniversalUrl; 
         headerBtn.textContent = "Download for Mac";
       }
       if (heroBtn && heroBtn.parentNode) {
         heroBtn.parentNode.innerHTML = `
-          <a href="${macArmUrl}" class="btn btn-primary" style="font-size:14px; padding:12px 20px;">⬇ Apple Silicon (M1/M2/M3)</a>
-          <a href="${macX64Url}" class="btn btn-primary" style="font-size:14px; padding:12px 20px;">⬇ Intel Mac</a>
+          <a href="${macUniversalUrl}" class="btn btn-primary" style="font-size:14px; padding:12px 20px;">⬇ Download Mac Beta</a>
           <a href="#installation" class="btn btn-secondary" style="font-size:14px; padding:12px 20px;">Install Guide</a>
         `;
       }
