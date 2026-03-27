@@ -652,7 +652,7 @@
           <a href="#installation" class="btn btn-secondary" style="font-size:14px; padding:12px 20px;">Install Guide</a>
         `;
       }
-      // Mac Bypass Override Instructions
+      // Mac Terminal Bypass Override Instructions
       if (installSteps) {
         installSteps.innerHTML = `
           <div class="step-item">
@@ -661,11 +661,11 @@
           </div>
           <div class="step-item">
             <div class="step-number">2</div>
-            <div class="step-content"><strong>Right-Click "Open"</strong><p>Don't double click naturally! Since this is an unreleased Beta, hold the <b>Control (⌃)</b> key, right-click the app, and select <b>Open</b>.</p></div>
+            <div class="step-content"><strong>Open Mac Terminal</strong><p>Press <kbd>Command + Space</kbd>, type <b>Terminal</b>, and hit Enter.</p></div>
           </div>
           <div class="step-item">
             <div class="step-number">3</div>
-            <div class="step-content"><strong>Bypass Security Warning</strong><p style="margin-bottom:8px;">Apple Gatekeeper will say it's from an "Unidentified Developer". Just click the <b>Open</b> button on the popup to execute natively perfectly!</p></div>
+            <div class="step-content"><strong>Bypass Apple Gatekeeper</strong><p style="margin-bottom:8px;">Since this is an early unsigned Beta, modern macOS blocks it by default. Paste this exact command into the Terminal and press return to execute cleanly!</p><code style="background:rgba(0,0,0,0.5); padding:8px 12px; border-radius:6px; color:var(--accent); font-family:monospace; display:block; font-size:13px; user-select:all;">xattr -cr "/Applications/Audio Vault.app"</code></div>
           </div>
         `;
       }
