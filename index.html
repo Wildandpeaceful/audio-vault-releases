@@ -642,9 +642,9 @@
         `;
       }
     } else if (isMac) {
-      // Split DMG Targets for Apple Silicon vs Intel to Bypass Universal Binary Corruption
+      // Split DMG Targets for Apple Silicon vs Intel
       if (headerBtn) {
-        headerBtn.href = macArmUrl; // Default header to Silicon
+        headerBtn.href = macArmUrl; 
         headerBtn.textContent = "Download for Mac";
       }
       if (heroBtn && heroBtn.parentNode) {
@@ -652,6 +652,23 @@
           <a href="${macArmUrl}" class="btn btn-primary" style="font-size:14px; padding:12px 20px;">⬇ Apple Silicon (M1/M2/M3)</a>
           <a href="${macX64Url}" class="btn btn-primary" style="font-size:14px; padding:12px 20px;">⬇ Intel Mac</a>
           <a href="#installation" class="btn btn-secondary" style="font-size:14px; padding:12px 20px;">Install Guide</a>
+        `;
+      }
+      // Mac Terminal Bypass Override Instructions
+      if (installSteps) {
+        installSteps.innerHTML = `
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content"><strong>Move to Applications</strong><p>Open the downloaded DMG and explicitly drag Audio Vault into your Applications folder.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content"><strong>Open Mac Terminal</strong><p>Press <kbd>Command + Space</kbd>, type <b>Terminal</b>, and hit Enter.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content"><strong>Bypass Apple Gatekeeper</strong><p style="margin-bottom:8px;">Since this is an early unsigned Beta, Apple blocks it by default. Paste this exact command into the Terminal and press return:</p><code style="background:rgba(0,0,0,0.5); padding:8px 12px; border-radius:6px; color:var(--accent); font-family:monospace; display:block; font-size:13px; user-select:all;">xattr -cr "/Applications/Audio Vault.app"</code></div>
+          </div>
         `;
       }
     }
