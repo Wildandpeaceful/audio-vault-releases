@@ -429,14 +429,14 @@
       <img src="logo.jpg" alt="Audio Vault" />
       <span class="logo-text">Audio Vault</span>
     </div>
-    <a href="https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.3-beta.1/Audio-Vault-Beta---v1.0.3-beta.1-for-Mac.dmg" class="btn btn-primary">Download Beta DMG</a>
+    <a id="dl-header" href="https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.3-beta.2/Audio-Vault-Beta---v1.0.3-beta.2-for-Mac.dmg" class="btn btn-primary">Download Beta DMG</a>
   </header>
 
   <section class="hero">
     <h1>Your beats. <span class="hero-highlight">Organized.</span></h1>
     <p>A lightning-fast desktop app to manage, tag, and preview your local audio library. No cloud required.</p>
     <div class="cta-group">
-      <a href="https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.3-beta.1/Audio-Vault-Beta---v1.0.3-beta.1-for-Mac.dmg" class="btn btn-primary">⬇ Download Beta Mac App</a>
+      <a id="dl-hero" href="https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.3-beta.2/Audio-Vault-Beta---v1.0.3-beta.2-for-Mac.dmg" class="btn btn-primary">⬇ Download Beta Mac App</a>
       <a href="#installation" class="btn btn-secondary">Install Guide</a>
     </div>
   </section>
@@ -583,5 +583,44 @@
     <div>© 2026 Wildandpeaceful. Build your vault.</div>
   </footer>
 
+<script>
+  // Dynamic OS Detect & Swap Configuration Array
+  document.addEventListener("DOMContentLoaded", () => {
+    const isWindows = navigator.platform.toLowerCase().includes('win');
+    if (isWindows) {
+      const headerBtn = document.getElementById("dl-header");
+      const heroBtn = document.getElementById("dl-hero");
+      const installSteps = document.querySelector('.step-list');
+      const winExeUrl = "https://github.com/Wildandpeaceful/audio-vault-releases/releases/download/v1.0.3-beta.2/Audio-Vault-Beta---v1.0.3-beta.2-for-Windows.exe";
+      
+      // Inject Windows Native Payload Targets & Syntax Overrides
+      if (headerBtn) {
+        headerBtn.href = winExeUrl;
+        headerBtn.textContent = "Download Windows Beta";
+      }
+      if (heroBtn) {
+        heroBtn.href = winExeUrl;
+        heroBtn.textContent = "⬇ Download Beta Windows App";
+      }
+      // Re-Write Tutorial Block To Parse As NSIS Windows Installation Guide
+      if (installSteps) {
+        installSteps.innerHTML = `
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content"><strong>Download the Exe</strong><p>Grab the Windows Setup file using the primary button.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content"><strong>Run the Installer</strong><p>Double-click the Audio Vault Setup.exe file to quickly install the application.</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content"><strong>Windows SmartScreen</strong><p>If you see a "Windows protected your PC" warning initially, simply click "More Info" and "Run Anyway".</p></div>
+          </div>
+        `;
+      }
+    }
+  });
+</script>
 </body>
 </html>
